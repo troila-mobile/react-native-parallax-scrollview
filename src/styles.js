@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH } from './constants';
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: SCREEN_WIDTH,
     resizeMode: 'cover'
+  },
+  mask: {
+    position: 'absolute',
+    width: SCREEN_WIDTH,
+    height: SCREEN_WIDTH,
+    zIndex: 10
   },
   content: {
     shadowColor: '#222',

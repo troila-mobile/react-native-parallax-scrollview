@@ -162,6 +162,7 @@ export default class ParallaxScrollView extends Component {
 					style={{
 						height: newNavBarHeight,
 						width: SCREEN_WIDTH,
+						zIndex: 10,
 						backgroundColor: scrollY.interpolate({
 							inputRange: [-windowHeight, windowHeight * DEFAULT_WINDOW_MULTIPLIER, windowHeight * 0.8],
 							outputRange: ['transparent', 'transparent', navBarColor || 'rgba(0, 0, 0, 1.0)']
@@ -193,11 +194,20 @@ export default class ParallaxScrollView extends Component {
 		}
 	}
 	render() {
-		const { style, ...props } = this.props;
+		const { style, mask, maskColor, ...props } = this.props;
 
 		return (
 			<View style={[styles.container, style]}>
-				{this.renderBackground()}
+				<View>
+					{this.renderBackground()}
+					{
+						mask ? <View 
+							style={[styles.mask,{
+								backgroundColor: maskColor,
+							}]}
+						/> : null
+					}
+				</View>
 				{this.rendernavBar()}
 				<ScrollView
 					ref={component => {
@@ -224,7 +234,9 @@ ParallaxScrollView.defaultProps = {
 	backgroundSource: { uri: 'http://i.imgur.com/6Iej2c3.png' },
 	windowHeight: SCREEN_HEIGHT * DEFAULT_WINDOW_MULTIPLIER,
 	leftIconOnPress: () => console.log('Left icon pressed'),
-	rightIconOnPress: () => console.log('Right icon pressed')
+	rightIconOnPress: () => console.log('Right icon pressed'),
+	mask: false,
+	maskColor: 'rgba(53,82,138,.9)',
 };
 
 ParallaxScrollView.propTypes = {
@@ -240,5 +252,7 @@ ParallaxScrollView.propTypes = {
 	userTitle: PropTypes.string,
 	headerView: PropTypes.node,
 	leftIcon: PropTypes.object,
-	rightIcon: PropTypes.object
+	rightIcon: PropTypes.object,
+	mask: PropTypes.bool,
+	maskColor: PropTypes.string,
 };
